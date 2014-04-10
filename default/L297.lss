@@ -1,0 +1,286 @@
+
+L297.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000012e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000c  00800060  0000012e  000001a2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  0080006c  0000013a  000001ae  2**0
+                  ALLOC
+  3 .debug_aranges 00000020  00000000  00000000  000001ae  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 00000089  00000000  00000000  000001ce  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000222  00000000  00000000  00000257  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000164  00000000  00000000  00000479  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000171  00000000  00000000  000005dd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000070  00000000  00000000  00000750  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000000c9  00000000  00000000  000007c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000026  00000000  00000000  00000889  2**0
+                  CONTENTS, READONLY, DEBUGGING
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	49 c0       	rjmp	.+146    	; 0x96 <__vector_1>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d1 e0       	ldi	r29, 0x01	; 1
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	ee e2       	ldi	r30, 0x2E	; 46
+  36:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	02 c0       	rjmp	.+4      	; 0x3e <.do_copy_data_start>
+
+0000003a <.do_copy_data_loop>:
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+
+0000003e <.do_copy_data_start>:
+  3e:	ac 36       	cpi	r26, 0x6C	; 108
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <.do_copy_data_loop>
+
+00000044 <__do_clear_bss>:
+  44:	10 e0       	ldi	r17, 0x00	; 0
+  46:	ac e6       	ldi	r26, 0x6C	; 108
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	ad 36       	cpi	r26, 0x6D	; 109
+  50:	b1 07       	cpc	r27, r17
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	5b d0       	rcall	.+182    	; 0x10c <main>
+  56:	69 c0       	rjmp	.+210    	; 0x12a <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <clockwise>:
+const uint8_t step_size[2][2] = {{ -2, -1 }, { +2, +1 }};
+
+static uint8_t current_step = 0;
+
+uint8_t clockwise( void )
+{
+  5a:	86 b3       	in	r24, 0x16	; 22
+   return PINB & 1;
+}
+  5c:	81 70       	andi	r24, 0x01	; 1
+  5e:	08 95       	ret
+
+00000060 <half_step>:
+
+uint8_t half_step( void )
+{
+  60:	86 b3       	in	r24, 0x16	; 22
+  62:	90 e0       	ldi	r25, 0x00	; 0
+  64:	82 70       	andi	r24, 0x02	; 2
+  66:	90 70       	andi	r25, 0x00	; 0
+  68:	95 95       	asr	r25
+  6a:	87 95       	ror	r24
+   return ( PINB & 2 ) >> 1;
+}
+  6c:	08 95       	ret
+
+0000006e <output_step>:
+
+void output_step( uint8_t s )
+{
+  6e:	9b b3       	in	r25, 0x1b	; 27
+  70:	90 7f       	andi	r25, 0xF0	; 240
+  72:	9b bb       	out	0x1b, r25	; 27
+   PORTA &= 0xF0;
+   s &=0x0F;
+   PORTA |= s;
+  74:	9b b3       	in	r25, 0x1b	; 27
+  76:	8f 70       	andi	r24, 0x0F	; 15
+  78:	89 2b       	or	r24, r25
+  7a:	8b bb       	out	0x1b, r24	; 27
+}
+  7c:	08 95       	ret
+
+0000007e <calc_next_step>:
+
+uint8_t calc_next_step( int8_t step_size )
+{
+  7e:	90 91 6c 00 	lds	r25, 0x006C
+  82:	98 0f       	add	r25, r24
+  84:	97 70       	andi	r25, 0x07	; 7
+  86:	90 93 6c 00 	sts	0x006C, r25
+  8a:	e0 e6       	ldi	r30, 0x60	; 96
+  8c:	f0 e0       	ldi	r31, 0x00	; 0
+  8e:	e9 0f       	add	r30, r25
+  90:	f1 1d       	adc	r31, r1
+   current_step += step_size;
+   current_step &= sizeof( step_sequence ) - 1;
+   return step_sequence[current_step];
+}
+  92:	80 81       	ld	r24, Z
+  94:	08 95       	ret
+
+00000096 <__vector_1>:
+
+ISR( INT0_vect )
+{
+  96:	1f 92       	push	r1
+  98:	0f 92       	push	r0
+  9a:	0f b6       	in	r0, 0x3f	; 63
+  9c:	0f 92       	push	r0
+  9e:	11 24       	eor	r1, r1
+  a0:	2f 93       	push	r18
+  a2:	8f 93       	push	r24
+  a4:	9f 93       	push	r25
+  a6:	ef 93       	push	r30
+  a8:	ff 93       	push	r31
+
+static uint8_t current_step = 0;
+
+uint8_t clockwise( void )
+{
+   return PINB & 1;
+  aa:	e6 b3       	in	r30, 0x16	; 22
+}
+
+uint8_t half_step( void )
+{
+   return ( PINB & 2 ) >> 1;
+  ac:	86 b3       	in	r24, 0x16	; 22
+}
+
+uint8_t calc_next_step( int8_t step_size )
+{
+   current_step += step_size;
+   current_step &= sizeof( step_sequence ) - 1;
+  ae:	90 e0       	ldi	r25, 0x00	; 0
+  b0:	82 70       	andi	r24, 0x02	; 2
+  b2:	90 70       	andi	r25, 0x00	; 0
+  b4:	95 95       	asr	r25
+  b6:	87 95       	ror	r24
+  b8:	99 27       	eor	r25, r25
+  ba:	87 fd       	sbrc	r24, 7
+  bc:	90 95       	com	r25
+  be:	e1 70       	andi	r30, 0x01	; 1
+  c0:	ff 27       	eor	r31, r31
+  c2:	e7 fd       	sbrc	r30, 7
+  c4:	f0 95       	com	r31
+  c6:	ee 0f       	add	r30, r30
+  c8:	ff 1f       	adc	r31, r31
+  ca:	e8 0f       	add	r30, r24
+  cc:	f9 1f       	adc	r31, r25
+  ce:	e8 59       	subi	r30, 0x98	; 152
+  d0:	ff 4f       	sbci	r31, 0xFF	; 255
+  d2:	90 81       	ld	r25, Z
+  d4:	80 91 6c 00 	lds	r24, 0x006C
+  d8:	98 0f       	add	r25, r24
+  da:	97 70       	andi	r25, 0x07	; 7
+  dc:	90 93 6c 00 	sts	0x006C, r25
+   return ( PINB & 2 ) >> 1;
+}
+
+void output_step( uint8_t s )
+{
+   PORTA &= 0xF0;
+  e0:	8b b3       	in	r24, 0x1b	; 27
+  e2:	80 7f       	andi	r24, 0xF0	; 240
+  e4:	8b bb       	out	0x1b, r24	; 27
+   s &=0x0F;
+   PORTA |= s;
+  e6:	2b b3       	in	r18, 0x1b	; 27
+  e8:	e0 e6       	ldi	r30, 0x60	; 96
+  ea:	f0 e0       	ldi	r31, 0x00	; 0
+  ec:	e9 0f       	add	r30, r25
+  ee:	f1 1d       	adc	r31, r1
+  f0:	80 81       	ld	r24, Z
+  f2:	8f 70       	andi	r24, 0x0F	; 15
+  f4:	82 2b       	or	r24, r18
+  f6:	8b bb       	out	0x1b, r24	; 27
+
+   x = clockwise();
+   y = half_step();
+   s = step_size[ x ][ y ];
+   output_step( calc_next_step( s));
+}
+  f8:	ff 91       	pop	r31
+  fa:	ef 91       	pop	r30
+  fc:	9f 91       	pop	r25
+  fe:	8f 91       	pop	r24
+ 100:	2f 91       	pop	r18
+ 102:	0f 90       	pop	r0
+ 104:	0f be       	out	0x3f, r0	; 63
+ 106:	0f 90       	pop	r0
+ 108:	1f 90       	pop	r1
+ 10a:	18 95       	reti
+
+0000010c <main>:
+
+int main( void )
+{
+ 10c:	80 e8       	ldi	r24, 0x80	; 128
+ 10e:	86 bd       	out	0x26, r24	; 38
+
+   CLKPR = _BV( CLKPCE );
+   CLKPR = 0;
+ 110:	16 bc       	out	0x26, r1	; 38
+
+   DDRA  = 0x0F;
+ 112:	8f e0       	ldi	r24, 0x0F	; 15
+ 114:	8a bb       	out	0x1a, r24	; 26
+   PORTA = 0;
+ 116:	1b ba       	out	0x1b, r1	; 27
+
+   PORTB = 0x07;		// Enable pullups
+ 118:	87 e0       	ldi	r24, 0x07	; 7
+ 11a:	88 bb       	out	0x18, r24	; 24
+
+   GIMSK = _BV( INT0 );
+ 11c:	80 e4       	ldi	r24, 0x40	; 64
+ 11e:	8b bf       	out	0x3b, r24	; 59
+   MCUCR |= _BV( ISC00 ) + _BV( ISC01 );
+ 120:	85 b7       	in	r24, 0x35	; 53
+ 122:	83 60       	ori	r24, 0x03	; 3
+ 124:	85 bf       	out	0x35, r24	; 53
+
+   sei();
+ 126:	78 94       	sei
+ 128:	ff cf       	rjmp	.-2      	; 0x128 <main+0x1c>
+
+0000012a <_exit>:
+ 12a:	f8 94       	cli
+
+0000012c <__stop_program>:
+ 12c:	ff cf       	rjmp	.-2      	; 0x12c <__stop_program>
